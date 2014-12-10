@@ -6,7 +6,7 @@ JUST GET ME RUNNING!
 4. Compile the source code.  `compileit.cmd` should work.
 5. Modify the configuration file `FSWatcherCmdLine.exe.config` to match the connection to your database
 6. Run batch script `runFileSystemWatcher.cmd <yourTargetDirectory>`
-7. Create some files in the targetDirectory, and check your database table for events.
+7. Create or delete some files in the targetDirectory, and check your database table for events.
   
 
 Operation
@@ -14,19 +14,19 @@ Operation
 The class FSWatcherUtility detects changes in a directory tree.  Whenever a file in the directory tree is created, renamed, changed or deleted, that event is captured and saved to a database.  FSWatcherUtility leverages the .NET class [`System.IO.FileSystemWatcher`](http://msdn.microsoft.com/en-us/library/system.io.filesystemwatcher(v=vs.110).aspx) to do most of the work.  The class is driven in a stand-alone executable, or in a service.
 
 ####Command-line interface:
-Run `FSWatcherCmdLine.exe` with no arguments to get a list of (required) and [optional] arguments.  Data collected will be sent to stdout by including the argument `stdout`.
+Run `FSWatcherCmdLine.exe` with no arguments to get a list of (required) and [optional] arguments.  Data collected can be sent to stdout by including the argument `stdout`.
 
 Batch script `runFileSystemWatcher.cmd` detects basic requirements, and starts `FSWatcherCmdLine` to listen for `created` and `deleted` events.
 
 To stop `FSWatcherCmdLine`, press 'q' in the running command prompt.  Alternatively, create a file named `stopWatching.txt`, and the utility will exit.
 
 ####Windows Service:
-`FSWatcherService.exe` must be registered as a service to run.  Batch script `installFSWService.cmd` will handle most of the details.  By default, the service is registered to run as you, and you are prompted for your password.  Because it is a service, a valid connection string is required in the configuration file.
+`FSWatcherService.exe` must be registered as a service to run.  Batch script `installFSWService.cmd` will handle most of the details.  By default, the service is registered to run as you, and you are prompted for your password.
 
 ####Dependencies
 Both executables store data in a database table named `MN_File_System_Mgmt`.  Configuration files for each executable have database connection details.  SQL for creating table `MN_File_System_Mgmt` is in file `fswatcher.sql`.
 
-Both executables use the Apache library `log4net` to manage logging; a default configuration file `log4net-config.xml` is provided.  To run either executable, you must have file `log4net-config.xml` in the same directory with the executable.  By default, both executables log messages to the Windows Event log.  The command-line executable can also log to stdout.  More information on configuring log4net can be found at http://logging.apache.org/log4net/release/manual/configuration.html .  
+Both executables use the Apache library `log4net` to manage logging; a default configuration file `log4net-config.xml` is provided.  To run either executable, you must have file `log4net-config.xml` in the same directory with the executable.  By default, both executables log messages to the Windows Event log, and to Console logger.  .  More information on configuring log4net can be found at http://logging.apache.org/log4net/release/manual/configuration.html .  
 
 A custom view for EventViewer is included that selects all events from FileSystemWatcher executables.  Import the file `FSWatcherService_EventView.xml` into EventViewer to create the custom view selecting only those events.
 
