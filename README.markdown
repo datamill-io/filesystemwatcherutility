@@ -11,7 +11,7 @@ JUST GET ME RUNNING!
 
 Operation
 ---------
-The class FSWatcherUtility detects changes in a directory tree.  Whenever a file in the directory tree is created, renamed, changed or deleted, that event is captured and saved to a database.  FSWatcherUtility leverages the .NET class [`System.IO.FileSystemWatcher`](http://msdn.microsoft.com/en-us/library/system.io.filesystemwatcher(v=vs.110).aspx) to do most of the work.  The class is driven in a stand-alone executable, or in a service.
+The class FSWatcherUtility detects changes in a directory tree.  Whenever a file in the directory tree is created, renamed, changed or deleted, that event is captured and saved to a database.  FSWatcherUtility leverages the .NET class [System.IO.FileSystemWatcher](http://msdn.microsoft.com/en-us/library/system.io.filesystemwatcher(v=vs.110).aspx) to do most of the work.  The class is driven in a stand-alone executable, or in a service.
 
 ####Command-line interface:
 Run `FSWatcherCmdLine.exe` with no arguments to get a list of (required) and [optional] arguments.  Data collected can be sent to stdout by including the argument `stdout`.
