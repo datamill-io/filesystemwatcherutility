@@ -1,0 +1,78 @@
+
+<log4net>
+	<appender name="ColorConsole" type="log4net.Appender.ManagedColoredConsoleAppender">
+		<mapping>
+			<level value="ERROR" />
+			<foreColor value="White" />
+			<backColor value="Red" />
+		</mapping>
+		<mapping>
+			<level value="DEBUG" />
+			<foreColor value="DarkGreen" />
+			<backColor value="Gray" />
+		</mapping>
+		<mapping>
+			<level value="INFO" />
+			<foreColor value="Gray" />
+		</mapping>
+		<mapping>
+			<level value="WARN" />
+			<foreColor value="Yellow" />
+		</mapping>
+		<layout type="log4net.Layout.PatternLayout">
+			<conversionPattern value="%date{yyyy-MM-dd HH:mm:ss,fff} [%thread] %-5level:  %message%newline" />
+		</layout>
+	</appender>
+
+	<appender name="FSWatcher-File" type="log4net.Appender.FileAppender">
+		<file value="${TMP}\\FSWatcher-logfile.txt" />
+		<appendToFile value="true" />
+		<layout type="log4net.Layout.PatternLayout">
+			<conversionPattern value="%date{yyyy-MM-dd HH:mm:ss,fff} [%thread] %-5level:  %message%newline" />
+		</layout>
+	</appender>
+
+	<appender name="FSWatcher-EventLog" type="log4net.Appender.EventLogAppender">
+		<applicationName value="File System Watcher" />
+		<layout type="log4net.Layout.PatternLayout">
+			<conversionPattern value="%date{yyyy-MM-dd HH:mm:ss,fff} [%thread] %-5level:  %message%newline" />
+		</layout>
+		<mapping>
+			<level value="DEBUG" />
+			<eventLogEntryType value="Information" />
+		</mapping>
+		<mapping>
+			<level value="INFO" />
+			<eventLogEntryType value="Information" />
+		</mapping>
+		<mapping>
+			<level value="WARN" />
+			<eventLogEntryType value="Warning" />
+		</mapping>
+		<mapping>
+			<level value="ERROR" />
+			<eventLogEntryType value="Error" />
+		</mapping>
+		<mapping>
+			<level value="FATAL" />
+			<eventLogEntryType value="Error" />
+		</mapping>
+<!-- By default, let's not spam the EventLog with debugging info -->
+		<filter type="log4net.Filter.LevelRangeFilter">
+			<levelMin value="INFO"/>
+		</filter>
+	</appender>
+
+ 	<logger name="Commercehub.FileSystemWatcher">
+		<level value="DEBUG"/>
+		<appender-ref ref="ColorConsole" />
+	</logger>
+	
+	<!-- Root logger needs to be last -->
+	<root>
+		<level value="INFO" />
+<!--		<appender-ref ref="FSWatcher-File" /> -->
+		<appender-ref ref="FSWatcher-EventLog" />
+	</root>
+	
+</log4net>
