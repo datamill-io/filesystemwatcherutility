@@ -13,17 +13,17 @@ Operation
 ---------
 The class FSWatcherUtility detects changes in a directory tree.  Whenever a file in the directory tree is created, renamed, changed or deleted, that event is captured and saved to a database.  FSWatcherUtility leverages the .NET class [System.IO.FileSystemWatcher](http://msdn.microsoft.com/en-us/library/system.io.filesystemwatcher(v=vs.110).aspx) to do most of the work.  The class is driven in a stand-alone executable, or in a service.
 
-####Command-line interface:
+### Command-line interface:
 Run `FSWatcherCmdLine.exe` with no arguments to get a list of (required) and [optional] arguments.  Data collected can be sent to stdout by including the argument `stdout`.
 
 Batch script `runFileSystemWatcher.cmd` detects basic requirements, and starts `FSWatcherCmdLine` to listen for `created` and `deleted` events.
 
 To stop `FSWatcherCmdLine`, press 'q' in the running command prompt.  Alternatively, create a file named `stopWatching.txt`, and the utility will exit.
 
-####Windows Service:
+### Windows Service:
 `FSWatcherService.exe` must be registered as a service to run.  Batch script `installFSWService.cmd` will handle most of the details.  By default, the service is registered to run as you, and you are prompted for your password.
 
-####Dependencies
+### Dependencies
 Both executables store data in a database table named `MN_File_System_Mgmt`.  Configuration files for each executable have database connection details.  SQL for creating table `MN_File_System_Mgmt` is in file `fswatcher.sql`.
 
 Both executables use the Apache library `log4net` to manage logging; a default configuration file `log4net-config.xml` is provided.  To run either executable, you must have file `log4net-config.xml` in the same directory with the executable.  By default, both executables log messages to the Windows Event log, and to Console logger.  .  More information on configuring log4net can be found at http://logging.apache.org/log4net/release/manual/configuration.html .  
