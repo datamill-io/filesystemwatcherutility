@@ -7,6 +7,7 @@ namespace Commercehub.FileSystemWatcher {
 	using System.Diagnostics;
 	using System.IO;
 	using System.ServiceProcess;
+	using System.Threading;
 	using log4net;
 	using log4net.Config;
 
@@ -56,7 +57,7 @@ namespace Commercehub.FileSystemWatcher {
 
 			// string dbConnFullPath = Path.Combine(svcPath, dbConnFileName);
 			// if (!File.Exists(dbConnFullPath)) {
-				// throw new System.IO.FileNotFoundException("DB Connection file missing.", dbConnFullPath);
+			// throw new System.IO.FileNotFoundException("DB Connection file missing.", dbConnFullPath);
 			// }
 
 			string dbConnectionString;
@@ -120,6 +121,14 @@ namespace Commercehub.FileSystemWatcher {
 
 		protected void startNewWorker()
 		{
+			if (null != worker) {
+				worker.CancelAsync(); // stop the existing worker
+				while (worker.IsBusy) {
+					Thread.Sleep(50);
+				}
+				worker.Dispose();
+			}
+			
 			worker = new BackgroundWorker();
 			worker.WorkerSupportsCancellation = true;
 			worker.DoWork += new DoWorkEventHandler(watcher.backgroundWorker1_DoWork);
