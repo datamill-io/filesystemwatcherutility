@@ -1,3 +1,6 @@
+# THIS PROJECT IS DEPRECATED
+filesystemwatcherutility is no longer maintained, and **this** repository will be removed from GitHub on or after Thursday, January 26, 2017.
+
 JUST GET ME RUNNING!
 --------------------
 1. Get Read-Write access to a SQL Server instance & database
